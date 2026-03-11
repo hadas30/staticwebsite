@@ -6,7 +6,12 @@
 <body>
   <h1>My Photography!</h1>
   <p>I'm hosted on Amazon S3!</p>
-  <img src="img1.jpg">
+  <img
+    srcset = "img1_480w, img1_800w"
+    sizes = "(width <= 600px) 480px"
+    src="img1_800w.jpg"
+    alt="San Franciso Airport"
+    />
 </body>
 =======
 <html xmlns="http://www.w3.org/1999/xhtml" >
