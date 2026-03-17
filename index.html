@@ -1,37 +1,182 @@
-<!doctype html>
-<html lang="en-US">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Image Cards with Header</title>
+  <style>
+    :root {
+      --gap: clamp(1rem, 2vw, 1.75rem);
+      --radius: 14px;
+      --shadow: 0 4px 24px rgba(0,0,0,.10);
+      --hover-shadow: 0 12px 40px rgba(0,0,0,.18);
+    }
 
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-<h1>
-    <title>AWS Portfolio</title>
-</h1>
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 3rem 2rem;
+      background: #f0ece6;
+      font-family: 'Georgia', serif;
+    }
+
+    /* ── PAGE LAYOUT: single column stacks header above grid ── */
+    .page {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+      width: 100%;
+      max-width: 1100px;
+    }
+
+    /* ── TEXT COLUMN (full width above the cards) ── */
+    .page__intro {
+      max-width: 65ch;        /* comfortable reading width */
+    }
+
+    .page__intro h1 {
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 700;
+      letter-spacing: -.02em;
+      color: #1a1a1a;
+      line-height: 1.2;
+      margin-bottom: .75rem;
+    }
+
+    .page__intro p {
+      font-size: 1rem;
+      line-height: 1.75;
+      color: #555;
+    }
+
+    .page__intro p + p {
+      margin-top: .75rem;
+    }
+
+    /* ── CARD GRID ── */
+    .card-grid {
+      display: grid;
+      gap: var(--gap);
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (max-width: 860px) {
+      .card-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 520px) {
+      .card-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── Card ── */
+    .card {
+      background: #fff;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform .3s ease, box-shadow .3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--hover-shadow);
+    }
+
+    /* 4:3 image wrapper */
+    .card__img-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+    }
+
+    .card__img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .4s ease;
+    }
+
+    .card:hover .card__img-wrap img {
+      transform: scale(1.05);
+    }
+
+    .card__body {
+      padding: 1rem 1.25rem 1.25rem;
+    }
+
+    .card__title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #1a1a1a;
+    }
+
+    .card__sub {
+      margin-top: .35rem;
+      font-size: .875rem;
+      color: #777;
+      font-style: italic;
+    }
+  </style>
+</head>
 <body>
-  <h1>My Photography!</h1>
-  <img
-    srcset="images/img1_480w.jpg 480w,
-            images/img1_800w.jpg 800w"
-    sizes="(width <= 600px) 480px,
-            800px"
-    src="images/img1_480w.jpg"
-    alt="San Franciso Airport"
-    >
 
-    <img
-    srcset="https://aws-portfolio-s3-bucket.s3.us-east-1.amazonaws.com/assets/assets/img2_480w.jpg 480w,
-            https://aws-portfolio-s3-bucket.s3.us-east-1.amazonaws.com/assets/assets/img2_800w.jpg 800w"
-    sizes="(width <= 600px) 480px,
-            800px"
-    src="https://aws-portfolio-s3-bucket.s3.us-east-1.amazonaws.com/assets/assets/img2_480w.jpg"
-    alt="Desert Wood"
-    >
+  <div class="page">
 
-    <img
-    srcset="https://aws-portfolio-s3-bucket.s3.us-east-1.amazonaws.com/assets/assets/img3_480w.jpg 480w,
-            https://aws-portfolio-s3-bucket.s3.us-east-1.amazonaws.com/assets/assets/img3_800w.jpg 800w"
-    sizes="(width <= 600px) 480px,
-            800px"
-    src="https://aws-portfolio-s3-bucket.s3.us-east-1.amazonaws.com/assets/assets/img3_480w.jpg"
-    alt="Desert Wood"
-    >
+    <!-- TEXT COLUMN -->
+    <div class="page__intro">
+      <h1>About this Website:</h1>
+      <p> Thank you so much for visiting my website! This site is hosted on AWS, with images hosted on S3</p>
+      <p> I am Harshith Das, a Data scientist and software engineer with an M.S. in Data Science and B.S. in Information Technology Management.</p>
+      <p> As a hobby, I am a photographer. You can see some of my work below:</p>
+    </div>
+
+    <!-- CARD GRID -->
+    <div class="card-grid">
+
+      <div class="card">
+        <div class="card__img-wrap">
+          <img 
+          src="https://aws-portfolio-s3-bucket.s3.us-east-1.amazonaws.com/assets/assets/img1.jpg"
+          alt="Mountain landscape" />
+        </div>
+        <div class="card__body">
+          <p class="card__title">San Franciso Airport</p>
+          <p class="card__sub">California · Winter 2026</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card__img-wrap">
+          <img 
+          src="https://aws-portfolio-s3-bucket.s3.us-east-1.amazonaws.com/assets/assets/img2.jpg"
+          alt="Ocean view" />
+        </div>
+        <div class="card__body">
+          <p class="card__title">Death Valley</p>
+          <p class="card__sub">California · Summer 2021</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card__img-wrap">
+          <img 
+          src="https://aws-portfolio-s3-bucket.s3.us-east-1.amazonaws.com/assets/assets/img3.jpg"
+          alt="Forest path" />
+        </div>
+        <div class="card__body">
+          <p class="card__title">Devil's Postpile</p>
+          <p class="card__sub">California · Fall 2022</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
 </body>
 </html>
